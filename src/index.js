@@ -2,13 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/App';
 
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 import { Provider } from 'react-redux';
 
-const userReducer = (state = {}, action) => {
+const userReducerInitialState = {
+    userId: '',
+    username: '',
+    name: ''
+};
+
+const userReducer = (state = userReducerInitialState, action) => {
     switch (action.type) {
         case 'ACTION_TYPE_1': {
             return state;
@@ -61,7 +67,10 @@ const reducers = combineReducers({
 
 const middleware =applyMiddleware(promise(), thunk, logger());
 
-export const store = createStore(reducers, middleware);
+export const store = createStore(
+    reducers,
+    compose(middleware, window.devToolsExtension ? window.devToolsExtension() : f => f)
+);
 
 ReactDOM.render(
     <Provider store={store}>

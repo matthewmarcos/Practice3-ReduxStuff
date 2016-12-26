@@ -6,24 +6,20 @@ import Spinner from 'react-spinkit';
 
 class App extends Component {
 
-    constructor() {
-        super();
-    }
-
     componentWillMount() {
         store.dispatch((dispatch) => {
             dispatch({
                 type: 'FETCH_POSTS',
                 payload: axios.get('/posts')
             });
-        })
+        });
     }
 
     render() {
         const { posts, isLoading } = this.props;
-        const list = posts.map((post) => {
+        const list = posts.map((post, key) => {
             return (
-                <li>{post.title}</li>
+                <li key={key}>{post.title}</li>
             );
         });
         const spinner = (<Spinner spinnerName="three-bounce" />);
