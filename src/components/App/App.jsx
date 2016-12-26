@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-import { store } from '../../index';
 import { connect } from 'react-redux';
+
 import Spinner from 'react-spinkit';
+import * as posts from '../../actions/PostsActions';
 
 class App extends Component {
 
     componentWillMount() {
-        store.dispatch((dispatch) => {
-            dispatch({
-                type: 'FETCH_POSTS',
-                payload: axios.get('/posts')
-            });
+        this.props.dispatch((dispatch) => {
+            dispatch(posts.fetchPosts());
         });
     }
 
@@ -22,7 +19,8 @@ class App extends Component {
                 <li key={key}>{post.title}</li>
             );
         });
-        const spinner = (<Spinner spinnerName="three-bounce" />);
+        const spinner = (<Spinner spinnerName="rotating-plane" />);
+
         return (
             <div className="app">
                 <h1>Yeah!!!</h1>

@@ -1,69 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App/App';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
-import { Provider } from 'react-redux';
 
-const userReducerInitialState = {
-    userId: '',
-    username: '',
-    name: ''
-};
-
-const userReducer = (state = userReducerInitialState, action) => {
-    switch (action.type) {
-        case 'ACTION_TYPE_1': {
-            return state;
-        }
-        case 'ACTION_TYPE_2': {
-            return state;
-        }
-        default: {
-            return state;
-        }
-    }
-}
-
-const postsReducerInitialState = {
-    isLoading: false,
-    posts: []
-};
-
-const postsReducer = (state = postsReducerInitialState, action) => {
-
-    switch (action.type) {
-        case 'FETCH_POSTS': {
-            return state;
-        }
-        case 'FETCH_POSTS_PENDING': {
-            return {
-                ...state,
-                isLoading: true
-            };
-        }
-        case 'FETCH_POSTS_FULFILLED': {
-            return {
-                ...state,
-                isLoading: false,
-                posts: [
-                    ...action.payload.data
-                ]
-            };
-        }
-        default: {
-            return state;
-        }
-    }
-}
-
-const reducers = combineReducers({
-    user: userReducer,
-    posts: postsReducer
-});
+import App from './components/App/App';
+import reducers from './reducers';
 
 const middleware =applyMiddleware(promise(), thunk, logger());
 
