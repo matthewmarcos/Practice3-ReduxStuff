@@ -23,6 +23,12 @@ export const postsReducer = (state = postsReducerInitialState, action) => {
                 ]
             };
         }
+        case 'FETCH_POSTS_REJECTED': {
+            return {
+                ...state,
+                isLoading: false,
+            };
+        }
         default: {
             return state;
         }
