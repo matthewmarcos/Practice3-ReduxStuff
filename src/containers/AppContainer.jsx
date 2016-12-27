@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import Spinner from 'react-spinkit';
-import * as posts from '../../actions/PostsActions';
+import * as posts from '../actions/PostsActions';
+import * as Components from '../components';
 
-class App extends Component {
+class AppContainer extends Component {
 
     componentWillMount() {
         this.props.dispatch((dispatch) => {
@@ -12,27 +13,40 @@ class App extends Component {
         });
     }
 
-    render() {
+    whatToRender() {
         const { posts, isLoading } = this.props;
+        const { List } = Components;
+
         const list = posts.map((post, key) => {
             return (
                 <li key={key}>{post.title}</li>
             );
         });
+
+        const listComp = (<List posts={posts} />);
         const spinner = (<Spinner spinnerName="rotating-plane" />);
 
+        if(isLoading) {
+            return spinner;
+        }
+        else {
+            return list;
+        }
+    }
+
+    render() {
         return (
-            <div className="app">
+            <div className="app-container container">
                 <h1>Yeah!!!</h1>
                 <ol>
-                {isLoading ? spinner : list}
+                {this.whatToRender()}
                 </ol>
             </div>
         );
     }
 }
 
-App.defaultProps = {
+AppContainer.defaultProps = {
     isLoading: true,
     posts: []
 };
@@ -42,4 +56,4 @@ export default connect((store) => {
     return {
         posts, isLoading
     }
-})(App);
+})(AppContainer);
