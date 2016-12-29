@@ -35,12 +35,17 @@ class AppContainer extends Component {
     }
 
     render() {
+        const { Navbar } = Components;
+
         return (
-            <div className="app-container container">
-                <h1>Yeah!!!</h1>
-                <ol>
-                {this.whatToRender()}
-                </ol>
+            <div className="app-container">
+                <Navbar/>
+                <div className="container">
+                    <h1>Yeah!!!</h1>
+                    <ol>
+                    {this.whatToRender()}
+                    </ol>
+                </div>
             </div>
         );
     }
